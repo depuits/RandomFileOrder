@@ -1,80 +1,80 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.IO;
 using System.Security.Cryptography;
-using System.Collections;
+using System.Windows.Forms;
 
 namespace RandomOrder
 {
     public partial class Form1 : Form
-    {        
-        public Form1()
+    {
+        public Form1 ()
         {
-            InitializeComponent();
+            InitializeComponent ();
         }
 
-        private void FillList()
+        private void FillList ()
         {
-            clbFileList.Items.Clear();
-            string[] fileNames = Directory.GetFiles(folderBrowserDialog.SelectedPath);
+            clbFileList.Items.Clear ();
+            string[] fileNames = Directory.GetFiles (folderBrowserDialog.SelectedPath);
             foreach (string fileName in fileNames)
             {
-                clbFileList.Items.Add(Path.GetFileName(fileName), true);
+                clbFileList.Items.Add (Path.GetFileName (fileName), true);
             }
         }
 
-        private void btnBrowse_Click(object sender, EventArgs e)
+        private void btnBrowse_Click (object sender, EventArgs e)
         {
-            folderBrowserDialog.ShowDialog();
+            folderBrowserDialog.ShowDialog ();
             lblPath.Text = folderBrowserDialog.SelectedPath;
 
-            FillList();
+            FillList ();
 
             btnOpenDir.Enabled = true;
             btnRandomize.Enabled = true;
             btnRemoveDigits.Enabled = true;
         }
 
-        private void buttonCheckAll_Click(object sender, EventArgs e)
+        private void buttonCheckAll_Click (object sender, EventArgs e)
         {
             for (int i = 0; i < clbFileList.Items.Count; ++i)
             {
-                clbFileList.SetItemChecked(i, true);
+                clbFileList.SetItemChecked (i, true);
             }
         }
 
-        private void btnUncheckAll_Click(object sender, EventArgs e)
+        private void btnUncheckAll_Click (object sender, EventArgs e)
         {
             for (int i = 0; i < clbFileList.Items.Count; ++i)
             {
-                clbFileList.SetItemChecked(i, false);
+                clbFileList.SetItemChecked (i, false);
             }
         }
 
-        private void btnInvert_Click(object sender, EventArgs e)
+        private void btnInvert_Click (object sender, EventArgs e)
         {
             for (int i = 0; i < clbFileList.Items.Count; ++i)
             {
-                clbFileList.SetItemChecked(i, !clbFileList.GetItemChecked(i));
+                clbFileList.SetItemChecked (i, !clbFileList.GetItemChecked (i));
             }
         }
-        
-        private void btnRandomize_Click(object sender, EventArgs e)
+
+        private void btnRandomize_Click (object sender, EventArgs e)
         {
             IList checkedItems = clbFileList.CheckedItems;
 
-            List<int> numberList = new List<int>(checkedItems.Count);
+            List<int> numberList = new List<int> (checkedItems.Count);
             for (int i = 0; i < checkedItems.Count; ++i)
             {
-                numberList.Add(i+1);
+                numberList.Add (i + 1);
             }
-            ShuffleList(numberList);
+            ShuffleList (numberList);
 
             string path = folderBrowserDialog.SelectedPath;
             int digits = Math.Max ((int) minDigitsUpDown.Value, numberList.Count.ToString ().Length);
 
-            string format = formatTextBox.Text;
+            string format = formatTextBox.Text; //TODO validate format / create own formating (%n, %t)
 
             for (int i = 0; i < checkedItems.Count; ++i)
             {
@@ -83,22 +83,21 @@ namespace RandomOrder
                 string nummer = numberList[i].ToString ("D" + digits);
                 string newName = Path.Combine (path, string.Format (format, nummer, file));
 
-
-                //TODO check if file is changeable (ie not in use) or try catch?
-                File.Move (oriName, newName);
+                SaveRenameFile (oriName, newName);
             }
 
-            FillList();
+            FillList ();
         }
 
         public void ShuffleList<T>(IList<T> list)
         {
-            RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
+            RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider ();
             int n = list.Count;
             while (n > 1)
             {
                 byte[] box = new byte[1];
-                do provider.GetBytes(box);
+                do
+                    provider.GetBytes (box);
                 while (!(box[0] < n * (Byte.MaxValue / n)));
                 int k = (box[0] % n);
                 --n;
@@ -108,35 +107,49 @@ namespace RandomOrder
             }
         }
 
-        private void btnRemoveDigits_Click(object sender, EventArgs e)
+        private void btnRemoveDigits_Click (object sender, EventArgs e)
         {
             int charsToRemove = (int) charsToRemoveUpDown.Value;
-            if (MessageBox.Show("Are you sure you want to delete the first " + charsToRemove.ToString() + " chars of every file name?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            if (MessageBox.Show ("Are you sure you want to delete the first " + charsToRemove.ToString () + " chars of every file name?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 IList checkedItems = clbFileList.CheckedItems;
                 string path = folderBrowserDialog.SelectedPath;
 
                 for (int i = 0; i < checkedItems.Count; i++)
                 {
-                    string file = checkedItems[i].ToString();
-                    string oriName = Path.Combine(path, file);
-                    string newName = Path.Combine(path, file.Remove(0, charsToRemove));
+                    string file = checkedItems[i].ToString ();
+                    string oriName = Path.Combine (path, file);
+                    string newName = Path.Combine (path, file.Remove (0, charsToRemove)); //TODO check if file is long enough
 
-                    File.Move(oriName, newName);
+                    SaveRenameFile (oriName, newName);
                 }
 
-                FillList();
+                FillList ();
             }
         }
 
-        private void btnOpenDir_Click(object sender, EventArgs e)
+        private void btnOpenDir_Click (object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(folderBrowserDialog.SelectedPath);
+            System.Diagnostics.Process.Start (folderBrowserDialog.SelectedPath);
         }
 
-        private void linkLabel_Click(object sender, LinkLabelLinkClickedEventArgs e)
+        private void linkLabel_Click (object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("http://lukas.ck-servers.de");
+            System.Diagnostics.Process.Start ("http://lukas.ck-servers.de");
+        }
+
+        private void SaveRenameFile (string oriName, string newName)
+        {
+            try
+            {
+                File.Move (oriName, newName);
+            }
+            catch (Exception ex)
+            {
+                string title = string.Format ("Failed to rename {0}", oriName);
+                string text = ex.Message;
+                MessageBox.Show (text, title);
+            }
         }
     }
 }

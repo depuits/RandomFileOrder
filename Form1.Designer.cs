@@ -61,7 +61,7 @@
             this.clbFileList.FormattingEnabled = true;
             this.clbFileList.Location = new System.Drawing.Point(16, 96);
             this.clbFileList.Name = "clbFileList";
-            this.clbFileList.Size = new System.Drawing.Size(307, 169);
+            this.clbFileList.Size = new System.Drawing.Size(301, 169);
             this.clbFileList.TabIndex = 1;
             this.clbFileList.ThreeDCheckBoxes = true;
             // 
@@ -71,7 +71,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblPath.Location = new System.Drawing.Point(13, 9);
             this.lblPath.Name = "lblPath";
-            this.lblPath.Size = new System.Drawing.Size(310, 19);
+            this.lblPath.Size = new System.Drawing.Size(304, 19);
             this.lblPath.TabIndex = 2;
             this.lblPath.Text = "no path chosen";
             // 
@@ -131,7 +131,7 @@
             // 
             this.btnRandomize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRandomize.Enabled = false;
-            this.btnRandomize.Location = new System.Drawing.Point(187, 348);
+            this.btnRandomize.Location = new System.Drawing.Point(181, 348);
             this.btnRandomize.Name = "btnRandomize";
             this.btnRandomize.Size = new System.Drawing.Size(136, 23);
             this.btnRandomize.TabIndex = 9;
@@ -154,7 +154,7 @@
             this.btnRemoveDigits.Enabled = false;
             this.btnRemoveDigits.Location = new System.Drawing.Point(82, 377);
             this.btnRemoveDigits.Name = "btnRemoveDigits";
-            this.btnRemoveDigits.Size = new System.Drawing.Size(241, 23);
+            this.btnRemoveDigits.Size = new System.Drawing.Size(235, 23);
             this.btnRemoveDigits.TabIndex = 11;
             this.btnRemoveDigits.Text = "Remove characters from beginning of file names";
             this.btnRemoveDigits.UseVisualStyleBackColor = true;
@@ -209,7 +209,7 @@
             // 
             this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(213, 409);
+            this.linkLabel1.Location = new System.Drawing.Point(207, 409);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(110, 13);
             this.linkLabel1.TabIndex = 15;
@@ -241,7 +241,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(340, 431);
+            this.ClientSize = new System.Drawing.Size(334, 431);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.formatTextBox);
             this.Controls.Add(this.linkLabel1);
@@ -259,6 +259,7 @@
             this.Controls.Add(this.lblPath);
             this.Controls.Add(this.clbFileList);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(270, 380);
             this.Name = "Form1";
             this.Text = "FileOrderRandomizer";
             ((System.ComponentModel.ISupportInitialize)(this.charsToRemoveUpDown)).EndInit();
