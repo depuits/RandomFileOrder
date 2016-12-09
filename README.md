@@ -4,6 +4,8 @@ Originaly from sourceforge user [lumpiluk](https://sourceforge.net/u/lumpiluk/pr
 
 Added some funtionality and fixed some bugs.
 
+This version numbers the files in a sequential order instead of completely random like the original version. This makes it great to make a cd with a random track order.
+
 ## Description
 If, like me, you have a car radio or a clock radio which cannot play tracks in random order from your usb stick itself, this application might be useful for you.
 
